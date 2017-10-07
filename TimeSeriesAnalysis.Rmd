@@ -259,4 +259,29 @@ white_noiseb <- arima.sim(model = list(order = c(0, 0, 0)), n = 100)
 white_noisea - white_noiseb
 ```
 
-Moral of the exercise above: it's not necessary to call order = .. inside the list function.  Also each call of the function generates a different series. 
+Moral of the exercise above: it's not necessary to call order = .. inside the list function.  Also each call of the function generates a different series.
+Correction: The random walk simulation below shows that the order is needed.  Surprisingly it doesn't matter if it's called order2, orderA etc. But orde is not OK.  
+
+An ARIMA(p, d, q) model has three parts, the auto regressive order p, the order of integration (or differencing) d, and the moving average order q. 
+The ARIMA(0, 0, 0) model is the white noise model. 
+
+
+*** Random Walk ** 
+
+The random walk (RW) model is the cumulative sum (or integration) of a mean zero white noise (WN) series, such that the first difference series of a RW is a WN series.  
+
+RW is an ARIMA(0, 1, 0) model.
+
+```{r}
+random_walk <- arima.sim(model = list(order = c(0, 1, 0)), n = 100)
+ts.plot(random_walk)
+```
+
+```{r}
+ts.plot(diff(random_walk))
+```
+
+```{r}
+
+```
+
