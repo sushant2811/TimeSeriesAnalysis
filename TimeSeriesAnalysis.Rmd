@@ -220,3 +220,43 @@ ts.plot(EuStockMarkets, col = 1:4, xlab = "Year", ylab = "Index Value", main = "
 legend("topleft", colnames(EuStockMarkets), lty = 1, col = 1:4)
 ```
 
+
+***** White Noise *****
+
+```{r}
+list(order = c(0,0,0))
+```
+
+```{r}
+white_noise <- arima.sim(model = list(order = c(0,0,0)), n = 100)
+print(white_noise)
+```
+
+```{r}
+is.ts(white_noise)
+```
+```{r}
+ts.plot(white_noise)
+```
+
+```{r}
+white_noise2 <- arima.sim(model = list(c(0,0,0)), n = 100, mean = 100, sd = 20)
+ts.plot(white_noise2)
+```
+
+```{r}
+white_noise11 <- arima.sim(model = list(order = c(0, 0, 0)), n = 100)
+white_noise22 <- arima.sim(model = list(c(0, 0, 0)), n = 100)
+white_noise33 <- arima.sim(model = list(order2 = c(0, 0, 0)), n = 100)
+```
+
+```{r}
+white_noise11 - white_noise33
+```
+```{r}
+white_noisea <- arima.sim(model = list(order = c(0, 0, 0)), n = 100)
+white_noiseb <- arima.sim(model = list(order = c(0, 0, 0)), n = 100)
+white_noisea - white_noiseb
+```
+
+Moral of the exercise above: it's not necessary to call order = .. inside the list function.  Also each call of the function generates a different series. 
