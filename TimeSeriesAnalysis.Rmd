@@ -281,7 +281,15 @@ ts.plot(random_walk)
 ts.plot(diff(random_walk))
 ```
 
-```{r}
+Random walk with a drift
 
+```{r}
+rw_drift <- arima.sim(model = list(order = c(0, 1, 0)), n = 10000, mean = 0.1)
+ts.plot(rw_drift)
 ```
 
+```{r}
+mean(diff(rw_drift))
+```
+
+Note: the mean doesn't match if the n is a small number (the result is not surprising).  Plotting the diff(rw_drift) is another great way of looking at it. 
