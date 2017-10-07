@@ -165,3 +165,58 @@ print(time_series)
 print(sample_vector)
 ```
 
+The neat is.ts() command
+```{r}
+is.ts(time_series)
+is.ts(sample_vector)
+is.ts(Nile)
+is.ts(AirPassengers)
+```
+
+Exploring the EU stocks data
+
+```{r}
+print(EuStockMarkets)
+```
+
+
+```{r}
+head(EuStockMarkets, n = 132)
+```
+```{r}
+tail(EuStockMarkets)
+```
+
+```{r}
+start(EuStockMarkets)
+```
+
+I believed the second index in the output of start/end is the (number of rows - 1) having the given time index. 
+
+This is what the documentation says: 
+start: the time of the first observation. Either a single number or a vector of two integers, which specify a natural time unit and a (1-based) number of samples into the time unit.
+(so, counting numbers of spacings?)
+
+```{r}
+end(EuStockMarkets)
+```
+
+
+```{r}
+frequency(EuStockMarkets)
+```
+```{r}
+deltat(EuStockMarkets)
+```
+
+```{r}
+time(EuStockMarkets)
+```
+```{r}
+plot(EuStockMarketsplot)
+```
+```{r}
+ts.plot(EuStockMarkets, col = 1:4, xlab = "Year", ylab = "Index Value", main = "Major European Stock Indices, 1991-1998")
+legend("topleft", colnames(EuStockMarkets), lty = 1, col = 1:4)
+```
+
