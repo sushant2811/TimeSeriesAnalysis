@@ -1,0 +1,47 @@
+
+Exploring Time Series 
+
+Date: Oct. 6, 2016
+
+References: Datacamp
+
+---------------------------
+
+Start by looking at raw time series
+
+```{r}
+print(Nile)
+```
+
+Data about the water flow in river Nile from 1871 to 1970
+
+```{r}
+length(Nile)
+```
+
+```{r}
+head(Nile)
+```
+
+displaying first few values using head
+
+```{r}
+head(Nile, n = 10)
+```
+
+Displaying the last few values using the tail command
+
+```{r}
+tail(Nile)
+```
+
+```{r}
+plot(Nile, xlab = 'Year', ylab = 'River Volume (1e9 m^{3})', main = 'Annual River Nile Volume at Aswan, 1871-1970')
+```
+
+Plotting both points and the line
+
+```{r}
+plot(Nile, xlab = 'Year', ylab = 'River Volume (1e9 m^{3})', main = 'Annual River Nile Volume at Aswan, 1871-1970',  type = 'b')
+# b stands for both: line and points
+```
