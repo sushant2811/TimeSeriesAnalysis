@@ -49,3 +49,41 @@ Plotting both points and the line
 plot(Nile, xlab = 'Year', ylab = 'River Volume (1e9 m^{3})', main = 'Annual River Nile Volume at Aswan, 1871-1970',  type = 'b')
 # b stands for both: line and points
 ```
+
+Next look at another data set AirPassengers: The classic Box & Jenkins airline data. Monthly totals of international airline passengers, 1949 to 1960.
+
+```{r}
+print(AirPassengers)
+```
+
+
+Exploring some of the built-in commands on the AirPassengers data set
+
+"The start() and end() functions return the time index of the first and last observations. 
+The time() function calculates a vector of time indices, with one element for each time index on which the series was observed.
+The frequency() function returns the number of observations per unit time and the deltat() function returns the fixed time interval between observations. 
+The cycle() function returns the position in the cycle of each observation."
+
+```{r}
+start(AirPassengers)
+
+end(AirPassengers)
+```
+
+```{r}
+time(AirPassengers)
+```
+```{r}
+frequency(AirPassengers)
+```
+
+```{r}
+deltat(AirPassengers)
+```
+
+Basically deltat = 1/ frequency
+
+```{r}
+cycle(AirPassengers)
+```
+
