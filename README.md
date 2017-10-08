@@ -1,3 +1,3 @@
 # TimeSeriesAnalysis
 
-Expolring time series analysis in R
+Exploring time series analysis in R
