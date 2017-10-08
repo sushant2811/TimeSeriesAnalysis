@@ -399,3 +399,14 @@ plot(DAX, FTSE)
 pairs(EuStockMarkets)
 ```
 
+```{r}
+logreturns <- diff(log(EuStockMarkets))
+
+plot(logreturns)
+```
+
+```{r}
+pairs(logreturns)
+```
+
+The normal distribution has elliptical contours of equal probability. Pairs of data drawn from the multivariate normal distribution form a roughly elliptically shaped point cloud.  We see that the logreturns can be approximated by normal distribution. 
