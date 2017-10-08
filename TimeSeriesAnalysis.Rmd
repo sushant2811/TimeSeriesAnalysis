@@ -334,6 +334,37 @@ plot.ts(cbind(white_noise, random_walk, wn_drift, rw_drift))
 ```
 
 ```{r}
-ts.plot(wn_drift)
+EuStockMarkets[-1860,]
 ```
+
+*** Exploring financial time series **
+
+```{r}
+eu_percentreturns <- (EuStockMarkets[-1,] / EuStockMarkets[-1860,] - 1) * 100
+
+head(eu_percentreturns)
+```
+
+```{r}
+tail(eu_percentreturns)
+```
+
+```{r}
+colMeans(eu_percentreturns)
+```
+
+```{r}
+apply(eu_percentreturns, MARGIN = 2, FUN = var)
+```
+
+MARGIN = 2 tells that we want to apply the function over the columns.  FUN stands for the function
+
+```{r}
+apply(eu_percentreturns, MARGIN = 2, FUN = sd)
+```
+
+Note that var = sd^2 holds
+
+
+
 
