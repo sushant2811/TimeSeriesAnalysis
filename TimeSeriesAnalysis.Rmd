@@ -213,7 +213,7 @@ deltat(EuStockMarkets)
 time(EuStockMarkets)
 ```
 ```{r}
-plot(EuStockMarketsplot)
+plot(EuStockMarkets)
 ```
 ```{r}
 ts.plot(EuStockMarkets, col = 1:4, xlab = "Year", ylab = "Index Value", main = "Major European Stock Indices, 1991-1998")
@@ -317,5 +317,23 @@ int_wn <- model_wn$coef
 ```{r}
 ts.plot(rw_drift)
 abline(0, int_wn)
+```
+
+*** Exploring Stationarity **
+
+```{r}
+white_noise <- arima.sim(model = list(order = c(0, 0, 0)), n = 100)
+
+random_walk <- cumsum(white_noise)
+
+wn_drift <- arima.sim(model = list(order = c(0, 0, 0)), n = 100, mean = 0.4)
+
+rw_drift <- cumsum(wn_drift)
+
+plot.ts(cbind(white_noise, random_walk, wn_drift, rw_drift))
+```
+
+```{r}
+ts.plot(wn_drift)
 ```
 
