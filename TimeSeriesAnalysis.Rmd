@@ -365,6 +365,15 @@ apply(eu_percentreturns, MARGIN = 2, FUN = sd)
 
 Note that var = sd^2 holds
 
+```{r}
+par(mfrow = c(2,2))
+apply(eu_percentreturns, MARGIN = 2, FUN = hist, main = " ", xlab = "Percentage Return")
+```
 
+```{r}
+par(mfrow = c(2,2))
+apply(eu_percentreturns, MARGIN = 2, FUN = qqnorm, main = "")
+qqline(eu_percentreturns)
+```
 
-
+From histograms, we can see that the vast majority of returns are near zero, but some daily returns are greater than 5 percentage points in magnitude.  Similarly, we see a clear departure from normality, especially in the tails of the distributions, as evident in the normal quantile plots. 
