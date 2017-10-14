@@ -540,6 +540,28 @@ acf(x_ts, lag.max = 10, plot = TRUE)
 
 The pair of the dashed blue are called test bounds. Bounds test the null hypothesis that an autocorrelation coefficient is 0.  The null hypothesis is rejected if the sample correlation is outside the bound.  The usual level of the test is alpha = 0.05
 
+** Autoregressive model **
+
+Today's observation is regressed on yesterday's observation for all time t. 
+
+Today = Constant + slope * yesterday + noise
+
+Mean centered version:
+
+(Today - mean) = slope (Yesterday - mean) + White noise (WN)
+
+Y_t - mu = m (Y_{t-1} - mu) + epsilon_t
+
+If m = 0, Y_t is a WN process
+
+If m != 0, the Y_t depends on both epsilon_t and Y_{t-1} and the process is autocorrelated. 
+
+Large values of m lead to greater autocorrelation (If m > 1, then so strong autocorrelation that the series quickly diverges).
+
+Negative values of m lead to oscillatory time series. 
+
+
+
 ```{r}
 
 ```
