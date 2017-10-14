@@ -514,3 +514,18 @@ cor(x_t0, x_t1) * ((n-1) / (n))
 ```
 
 The two esimates are slightly different because they use slightly different scalings in the calculation of the calculation of the sample covariance. 
+
+Now let's look at autocorrelation for different lag.max. 
+
+```{r}
+acf(x_ts, plot = FALSE)
+```
+
+```{r}
+acf(x_ts, lag.max = 5, plot = FALSE)
+```
+
+```{r}
+acf(x_ts, lag.max = 5, plot = FALSE)[3]
+```
+
