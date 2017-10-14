@@ -775,3 +775,40 @@ points(MA_forecast + 2 * MA_forecast_se, type = "l", col = 2, lty = 2)
 ```
 
 Note that the MA model can only produce a 1-step forecast. For additional forecasting periods, the predict() command simply extends the original 1-step forecast. This explains the unexpected horizontal lines after 1971.
+
+** Comparing AR vs. MA models **
+
+```{r}
+AR_Nile_fit
+```
+
+```{r}
+MA_fit
+```
+
+```{r}
+AR_Nile_fit_values <- Nile - residuals(AR_Nile_fit)
+```
+
+```{r}
+AR_Nile_fit_values
+```
+
+```{r}
+cor(AR_Nile_fit_values, MA_fit)
+```
+
+```{r}
+AIC(AR_Nile_fit)
+```
+
+```{r}
+AIC(MA)
+```
+
+```{r}
+BIC(AR_Nile_fit)
+BIC(MA)
+```
+
+Although the predictions from both models are very similar (indeed, they have a correlation coeffiicent of 0.94), both the AIC and BIC indicate that the AR model is a slightly better fit for Nile data.
