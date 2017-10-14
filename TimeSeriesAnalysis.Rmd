@@ -572,7 +572,7 @@ x <- arima.sim(model = list(ar = 0.5), n = 100)
 x <- arima.sim(model = list(ar = 1.5), n = 100)
 ```
 ```{r}
-# Simulate an AR model with 0.9 slope
+# Simulate an AR model with0.9 slope
 y <- arima.sim(model = list(ar = 0.9), n = 100)
 
 # Simulate an AR model with -0.75 slope
@@ -709,3 +709,106 @@ The relatively wide band of confidence (represented by the dotted lines) is a re
 acf(Nile)
 ```
 
+** Simple moving average model **
+
+The simple moving average (MA) model is a parsimonious time series model used to account for very short-run autocorrelation. It does have a regression like form, but here each observation is regressed on the previous innovation, which is not actually observed. Like the autoregressive (AR) model, the MA model includes the white noise (WN) model as special case.
+
+As with previous models, the MA model can be simulated using the arima.sim() command by setting the model argument to list(ma = theta), where theta is a slope parameter from the interval (-1, 1). Once again, you also need to specifcy the series length using the n argument.
+
+```{r}
+x <- arima.sim(model = list(ma = 0.5), n = 100)
+y <- arima.sim(model = list(ma = 0.9), n = 100)
+z <- arima.sim(model = list(ma = -0.5), n = 100)
+plot.ts(cbind(x, y, z), type = 'b')
+```
+
+```{r}
+acf(x)
+acf(y)
+acf(z)
+```
+
+Note that the autocorrelation is zero for lag > 1. 
+
+Fitting the moving average model to the Nile data set
+
+```{r}
+MA <- arima(Nile, order = c(0, 0 ,1))
+print(MA)
+```
+
+```{r}
+ts.plot(Nile)
+MA_fit <- Nile - residuals(MA)
+points(MA_fit, type = "l", col = 2, lty = 2)
+```
+
+What a lousy fit!
+
+```{r}
+predict_MA <- predict(MA)
+predict_MA
+```
+
+```{r}
+predict_MA$pred[1]
+```
+
+```{r}
+predict(MA, n.ahead = 10)
+```
+
+Note that except for the 1-step forecast, all forecasts from the MA model are equal to the estimated mean (intercept).
+
+```{r}
+predict(MA, n.ahead = 10)$se
+```
+
+
+```{r}
+ts.plot(Nile, xlim = c(1871, 1980))
+MA_forecast <- predict(MA, n.ahead = 10)$pred
+MA_forecast_se <- predict(MA, n.ahead = 10)$se
+points(MA_forecast, type = "l", col = 2)
+points(MA_forecast - 2 * MA_forecast_se, type = "l", col = 2, lty = 2)
+points(MA_forecast + 2 * MA_forecast_se, type = "l", col = 2, lty = 2)
+```
+
+Note that the MA model can only produce a 1-step forecast. For additional forecasting periods, the predict() command simply extends the original 1-step forecast. This explains the unexpected horizontal lines after 1971.
+
+** Comparing AR vs. MA models **
+
+```{r}
+AR_Nile_fit
+```
+
+```{r}
+MA_fit
+```
+
+```{r}
+AR_Nile_fit_values <- Nile - residuals(AR_Nile_fit)
+```
+
+```{r}
+AR_Nile_fit_values
+```
+
+```{r}
+cor(AR_Nile_fit_values, MA_fit)
+```
+
+```{r}
+AIC(AR_Nile_fit)
+```
+
+```{r}
+AIC(MA)
+```
+
+```{r}
+BIC(AR_Nile_fit)
+BIC(MA)
+```
+
+Although the predictions from both models are very similar (indeed, they have a correlation coeffiicent of 0.94), both the AIC and BIC indicate that the AR model is a slightly better fit for Nile data.
