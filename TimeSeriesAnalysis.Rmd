@@ -589,3 +589,18 @@ plot(cbind(x, y, z), type = 'b')
 plot.ts(cbind(x, y, z), type = 'b')
 ```
 
+Autocorrelation of autogression processes. 
+
+```{r}
+acf(x)
+```
+
+```{r}
+acf(y)
+```
+
+```{r}
+acf(z)
+```
+
+Note that autocorrelation follows the expectation.  When the magnitude of the slope in the autoregressor model is large the autocorrelation is large (and persists for larger time lags). When the magnitude of the slope is small, the autocorrelation quickly decays beyond the first few time lags.  When the slope is negative, the autocorrelation oscillates sign. 
