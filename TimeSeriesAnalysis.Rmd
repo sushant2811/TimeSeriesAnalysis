@@ -668,10 +668,44 @@ print(AR)
 ```{r}
 residuals(AR)
 ```
-
 ```{r}
 ts.plot(AirPassengers)
 AR_fitted <- AirPassengers - residuals(AR)
 points(AR_fitted, type = "l", col = 14, lty = 2)
+```
+
+Making predictions using the fitted model
+
+```{r}
+print(Nile)    
+```
+```{r}
+AR_Nile_fit <- arima(Nile, order = c(1, 0, 0))
+print(AR_Nile_fit)
+```
+
+```{r}
+predict_AR <- predict(AR_Nile_fit)
+predict_AR
+```
+```{r}
+predict_AR$pred[1]
+```
+```{r}
+predict(AR_Nile_fit, n.ahead = 10)
+```
+```{r}
+ts.plot(Nile, xlim = c(1871, 1980))
+AR_forecast <- predict(AR_Nile_fit, n.ahead = 10)$pred
+AR_forecast_se <- predict(AR_Nile_fit, n.ahead = 10)$se
+points(AR_forecast, type = "l", col = 2)
+points(AR_forecast - 2 * AR_forecast_se, type = "l", col = 2, lty = 2)
+points(AR_forecast + 2 * AR_forecast_se, type = "l", col = 2, lty = 2)
+```
+
+The relatively wide band of confidence (represented by the dotted lines) is a result of the low persistence in the Nile data (as seen below)
+
+```{r}
+acf(Nile)
 ```
 
