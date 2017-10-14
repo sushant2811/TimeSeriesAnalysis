@@ -410,3 +410,25 @@ pairs(logreturns)
 ```
 
 The normal distribution has elliptical contours of equal probability. Pairs of data drawn from the multivariate normal distribution form a roughly elliptically shaped point cloud.  We see that the logreturns can be approximated by normal distribution. 
+
+```{r}
+DAX_logreturns <- logreturns[, 1]
+FTSE_logreturns <- logreturns[, 4]
+```
+
+```{r}
+cov(DAX_logreturns, FTSE_logreturns)
+```
+
+```{r}
+cov(logreturns)
+```
+
+```{r}
+cor(DAX_logreturns, FTSE_logreturns)
+```
+```{r}
+cor(logreturns)
+```
+
+Note that the correlation values are always between -1 and 1
