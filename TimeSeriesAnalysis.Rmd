@@ -572,7 +572,7 @@ x <- arima.sim(model = list(ar = 0.5), n = 100)
 x <- arima.sim(model = list(ar = 1.5), n = 100)
 ```
 ```{r}
-# Simulate an AR model with 0.9 slope
+# Simulate an AR model with0.9 slope
 y <- arima.sim(model = list(ar = 0.9), n = 100)
 
 # Simulate an AR model with -0.75 slope
@@ -709,3 +709,23 @@ The relatively wide band of confidence (represented by the dotted lines) is a re
 acf(Nile)
 ```
 
+** Simple moving average model **
+
+The simple moving average (MA) model is a parsimonious time series model used to account for very short-run autocorrelation. It does have a regression like form, but here each observation is regressed on the previous innovation, which is not actually observed. Like the autoregressive (AR) model, the MA model includes the white noise (WN) model as special case.
+
+As with previous models, the MA model can be simulated using the arima.sim() command by setting the model argument to list(ma = theta), where theta is a slope parameter from the interval (-1, 1). Once again, you also need to specifcy the series length using the n argument.
+
+```{r}
+x <- arima.sim(model = list(ma = 0.5), n = 100)
+y <- arima.sim(model = list(ma = 0.9), n = 100)
+z <- arima.sim(model = list(ma = -0.5), n = 100)
+plot.ts(cbind(x, y, z), type = 'b')
+```
+
+```{r}
+acf(x)
+acf(y)
+acf(z)
+```
+
+Note that the autocorrelation is zero for lag > 1. 
