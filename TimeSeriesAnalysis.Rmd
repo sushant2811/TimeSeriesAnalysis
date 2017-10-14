@@ -540,7 +540,172 @@ acf(x_ts, lag.max = 10, plot = TRUE)
 
 The pair of the dashed blue are called test bounds. Bounds test the null hypothesis that an autocorrelation coefficient is 0.  The null hypothesis is rejected if the sample correlation is outside the bound.  The usual level of the test is alpha = 0.05
 
-```{r}
+** Autoregressive model **
 
+Today's observation is regressed on yesterday's observation for all time t. 
+
+Today = Constant + slope * yesterday + noise
+
+Mean centered version:
+
+(Today - mean) = slope (Yesterday - mean) + White noise (WN)
+
+Y_t - mu = m (Y_{t-1} - mu) + epsilon_t
+
+If m = 0, Y_t is a WN process
+
+If m != 0, the Y_t depends on both epsilon_t and Y_{t-1} and the process is autocorrelated. 
+
+Large values of m lead to greater autocorrelation (If m > 1, then so strong autocorrelation that the series quickly diverges).
+
+Negative values of m lead to oscillatory time series. 
+
+The versatile arima.sim() function used in previous chapters can also be used to simulate data from an AR model by setting the model argument equal to list(ar = phi) , in which phi is a slope parameter from the interval (-1, 1) . 
+
+```{r}
+# Simulate an AR model with 0.5 slope
+x <- arima.sim(model = list(ar = 0.5), n = 100)
+```
+
+```{r}
+# Simulate an AR model with slope greater than 1
+x <- arima.sim(model = list(ar = 1.5), n = 100)
+```
+```{r}
+# Simulate an AR model with 0.9 slope
+y <- arima.sim(model = list(ar = 0.9), n = 100)
+
+# Simulate an AR model with -0.75 slope
+z <- arima.sim(model = list(ar = -0.75), n = 100)
+```
+
+Plot simulated data
+
+```{r}
+plot(cbind(x, y, z), type = 'b')
+```
+
+```{r}
+plot.ts(cbind(x, y, z), type = 'b')
+```
+
+Autocorrelation of autogression processes. 
+
+```{r}
+acf(x)
+```
+
+```{r}
+acf(y)
+```
+
+```{r}
+acf(z)
+```
+
+Note that autocorrelation follows the expectation.  When the magnitude of the slope in the autoregressor model is large the autocorrelation is large (and persists for larger time lags). When the magnitude of the slope is small, the autocorrelation quickly decays beyond the first few time lags.  When the slope is negative, the autocorrelation oscillates sign. 
+
+```{r}
+sample_vec <- c(rep(1,50))
+sample_vec
+```
+
+```{r}
+sample_ts <- ts(sample_vec)
+sample_ts
+```
+
+```{r}
+cov(sample_ts[-50], sample_ts[-1])
+```
+
+```{r}
+white_noise <- arima.sim(model = list(order = c(0, 0, 0)), n = 100)
+acf(white_noise)
+```
+
+Random walk (RW) and autoregressive (AR) models 
+
+```{r}
+x <- arima.sim(model = list(ar = 0.9), n = 200)
+ts.plot(x)
+```
+```{r}
+acf(x)
+```
+
+```{r}
+y <- arima.sim(model = list(ar = 0.98), n = 200)
+ts.plot(y)
+acf(y)
+```
+
+```{r}
+z <- arima.sim(model = list(order = c(0, 1, 0)), n = 200)
+ts.plot(z)
+```
+
+```{r}
+acf(z)
+```
+
+The random walk (RW) model is a special case of the autoregressive (AR) model, in which the slope parameter is equal to 1. Recall that the RW model is not stationary and exhibits very strong persistence. Its sample autocovariance function (ACF) also decays to zero very slowly, meaning past values have a long lasting impact on current values.
+
+The stationary AR model has a slope parameter between -1 and 1. The AR model exhibits higher persistence when its slope parameter is closer to 1, but the process reverts to its mean fairly quickly (compared to RW). Its sample ACF also decays to zero at a geometric rate, indicating that values far in the past have little impact on future values of the process.
+
+** Fitting and forecasting using the AR model **
+
+Fit AR model to AirPassengers data
+
+```{r}
+ts.plot(AirPassengers)
+```
+
+```{r}
+AR <- arima(AirPassengers, order = c(1, 0, 0))
+print(AR)
+```
+```{r}
+residuals(AR)
+```
+```{r}
+ts.plot(AirPassengers)
+AR_fitted <- AirPassengers - residuals(AR)
+points(AR_fitted, type = "l", col = 14, lty = 2)
+```
+
+Making predictions using the fitted model
+
+```{r}
+print(Nile)    
+```
+```{r}
+AR_Nile_fit <- arima(Nile, order = c(1, 0, 0))
+print(AR_Nile_fit)
+```
+
+```{r}
+predict_AR <- predict(AR_Nile_fit)
+predict_AR
+```
+```{r}
+predict_AR$pred[1]
+```
+```{r}
+predict(AR_Nile_fit, n.ahead = 10)
+```
+```{r}
+ts.plot(Nile, xlim = c(1871, 1980))
+AR_forecast <- predict(AR_Nile_fit, n.ahead = 10)$pred
+AR_forecast_se <- predict(AR_Nile_fit, n.ahead = 10)$se
+points(AR_forecast, type = "l", col = 2)
+points(AR_forecast - 2 * AR_forecast_se, type = "l", col = 2, lty = 2)
+points(AR_forecast + 2 * AR_forecast_se, type = "l", col = 2, lty = 2)
+```
+
+The relatively wide band of confidence (represented by the dotted lines) is a result of the low persistence in the Nile data (as seen below)
+
+```{r}
+acf(Nile)
 ```
 
