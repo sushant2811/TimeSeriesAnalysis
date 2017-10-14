@@ -604,3 +604,51 @@ acf(z)
 ```
 
 Note that autocorrelation follows the expectation.  When the magnitude of the slope in the autoregressor model is large the autocorrelation is large (and persists for larger time lags). When the magnitude of the slope is small, the autocorrelation quickly decays beyond the first few time lags.  When the slope is negative, the autocorrelation oscillates sign. 
+
+```{r}
+sample_vec <- c(rep(1,50))
+sample_vec
+```
+
+```{r}
+sample_ts <- ts(sample_vec)
+sample_ts
+```
+
+```{r}
+cov(sample_ts[-50], sample_ts[-1])
+```
+
+```{r}
+white_noise <- arima.sim(model = list(order = c(0, 0, 0)), n = 100)
+acf(white_noise)
+```
+
+Random walk (RW) and autoregressive (AR) models 
+
+```{r}
+x <- arima.sim(model = list(ar = 0.9), n = 200)
+ts.plot(x)
+```
+```{r}
+acf(x)
+```
+
+```{r}
+y <- arima.sim(model = list(ar = 0.98), n = 200)
+ts.plot(y)
+acf(y)
+```
+
+```{r}
+z <- arima.sim(model = list(order = c(0, 1, 0)), n = 200)
+ts.plot(z)
+```
+
+```{r}
+acf(z)
+```
+
+The random walk (RW) model is a special case of the autoregressive (AR) model, in which the slope parameter is equal to 1. Recall that the RW model is not stationary and exhibits very strong persistence. Its sample autocovariance function (ACF) also decays to zero very slowly, meaning past values have a long lasting impact on current values.
+
+The stationary AR model has a slope parameter between -1 and 1. The AR model exhibits higher persistence when its slope parameter is closer to 1, but the process reverts to its mean fairly quickly (compared to RW). Its sample ACF also decays to zero at a geometric rate, indicating that values far in the past have little impact on future values of the process.
