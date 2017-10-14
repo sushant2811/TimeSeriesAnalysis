@@ -485,6 +485,11 @@ x_ts
 ```
 
 ```{r}
+ts.plot(x_ts)
+```
+
+
+```{r}
 n = length(x)
 x_t0 <- x[-1]
 x_t1 <- x[-n]
@@ -527,5 +532,15 @@ acf(x_ts, lag.max = 5, plot = FALSE)
 
 ```{r}
 acf(x_ts, lag.max = 5, plot = FALSE)[3]
+```
+
+```{r}
+acf(x_ts, lag.max = 10, plot = TRUE)
+```
+
+The pair of the dashed blue are called test bounds. Bounds test the null hypothesis that an autocorrelation coefficient is 0.  The null hypothesis is rejected if the sample correlation is outside the bound.  The usual level of the test is alpha = 0.05
+
+```{r}
+
 ```
 
