@@ -746,5 +746,32 @@ points(MA_fit, type = "l", col = 2, lty = 2)
 What a lousy fit!
 
 ```{r}
+predict_MA <- predict(MA)
+predict_MA
 ```
 
+```{r}
+predict_MA$pred[1]
+```
+
+```{r}
+predict(MA, n.ahead = 10)
+```
+
+Note that except for the 1-step forecast, all forecasts from the MA model are equal to the estimated mean (intercept).
+
+```{r}
+predict(MA, n.ahead = 10)$se
+```
+
+
+```{r}
+ts.plot(Nile, xlim = c(1871, 1980))
+MA_forecast <- predict(MA, n.ahead = 10)$pred
+MA_forecast_se <- predict(MA, n.ahead = 10)$se
+points(MA_forecast, type = "l", col = 2)
+points(MA_forecast - 2 * MA_forecast_se, type = "l", col = 2, lty = 2)
+points(MA_forecast + 2 * MA_forecast_se, type = "l", col = 2, lty = 2)
+```
+
+Note that the MA model can only produce a 1-step forecast. For additional forecasting periods, the predict() command simply extends the original 1-step forecast. This explains the unexpected horizontal lines after 1971.
