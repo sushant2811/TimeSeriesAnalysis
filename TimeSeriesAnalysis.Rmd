@@ -560,9 +560,32 @@ Large values of m lead to greater autocorrelation (If m > 1, then so strong auto
 
 Negative values of m lead to oscillatory time series. 
 
-
+The versatile arima.sim() function used in previous chapters can also be used to simulate data from an AR model by setting the model argument equal to list(ar = phi) , in which phi is a slope parameter from the interval (-1, 1) . 
 
 ```{r}
+# Simulate an AR model with 0.5 slope
+x <- arima.sim(model = list(ar = 0.5), n = 100)
+```
 
+```{r}
+# Simulate an AR model with slope greater than 1
+x <- arima.sim(model = list(ar = 1.5), n = 100)
+```
+```{r}
+# Simulate an AR model with 0.9 slope
+y <- arima.sim(model = list(ar = 0.9), n = 100)
+
+# Simulate an AR model with -0.75 slope
+z <- arima.sim(model = list(ar = -0.75), n = 100)
+```
+
+Plot simulated data
+
+```{r}
+plot(cbind(x, y, z), type = 'b')
+```
+
+```{r}
+plot.ts(cbind(x, y, z), type = 'b')
 ```
 
