@@ -729,3 +729,22 @@ acf(z)
 ```
 
 Note that the autocorrelation is zero for lag > 1. 
+
+Fitting the moving average model to the Nile data set
+
+```{r}
+MA <- arima(Nile, order = c(0, 0 ,1))
+print(MA)
+```
+
+```{r}
+ts.plot(Nile)
+MA_fit <- Nile - residuals(MA)
+points(MA_fit, type = "l", col = 2, lty = 2)
+```
+
+What a lousy fit!
+
+```{r}
+```
+
