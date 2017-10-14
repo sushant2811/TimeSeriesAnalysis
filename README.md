@@ -10,5 +10,5 @@ The concepts studied are
 2) Different types of time series -- white noise, random walk, autoregressive models, 
 and moving average models. 
 3) Worked with real-world datasets such as EuStockMarkets, AirPassengers, and Nile. 
-4) Using the arima function explored predicted and forecasted the values for
+4) Using the arima function predicted and forecasted the values for
 different data sets. 
