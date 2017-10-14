@@ -500,3 +500,17 @@ Confirming above that x_t0 and x_t1 are (x[t], x[t-1]) pairs
 plot(x_t0, x_t1)
 ```
 
+```{r}
+cor(x_t0, x_t1)
+cor(x_t1, x_t0)
+```
+
+```{r}
+acf(x_ts, lag.max = 1, plot = FALSE)
+```
+
+```{r}
+cor(x_t0, x_t1) * ((n-1) / (n))
+```
+
+The two esimates are slightly different because they use slightly different scalings in the calculation of the calculation of the sample covariance. 
